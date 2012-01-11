@@ -117,7 +117,7 @@ class graphite {
 
   file { "/opt/graphite/conf/storage-schemas.conf":
     ensure  => file,
-    source  => "/opt/graphite/conf/storage-schemas.conf.example",
+    source  => "/vagrant/files/storage-schemas.conf",
     require => Package["graphite-web"],
   }
 
