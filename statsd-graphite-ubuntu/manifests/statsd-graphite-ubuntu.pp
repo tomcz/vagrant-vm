@@ -191,10 +191,10 @@ class graphite {
     ],
   }
 
-  exec { "start-carbon-cache":
-    command   => "service carbon-cache restart",
-    require   => File["/etc/init/carbon-cache.conf"],
-    logoutput => on_failure,
+  service { "carbon-cache":
+    ensure   => running,
+    provider => "upstart",
+    require  => File["/etc/init/carbon-cache.conf"],
   }
 }
 
@@ -228,10 +228,10 @@ class statsd {
     require => [File["/opt/statsd/local.js"], Package["nodejs"]],
   }
 
-  exec { "start-etsy-statsd":
-    command   => "service etsy-statsd restart",
-    require   => File["/etc/init/etsy-statsd.conf"],
-    logoutput => on_failure,
+  service { "etsy-statsd":
+    ensure   => running,
+    provider => "upstart",
+    require  => File["/etc/init/etsy-statsd.conf"],
   }
 }
 
