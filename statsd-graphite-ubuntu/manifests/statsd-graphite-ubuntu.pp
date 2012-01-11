@@ -185,12 +185,16 @@ class graphite {
     ensure  => file,
     source  => "/vagrant/files/carbon-cache.conf",
     mode    => 0644,
-    require => [File["/opt/graphite/storage"], File["/etc/apache2/sites-enabled/graphite-vhost.conf"]],
+    require => [
+      File["/opt/graphite/storage"],
+      File["/etc/apache2/sites-enabled/graphite-vhost.conf"],
+    ],
   }
 
   exec { "start-carbon-cache":
-    command => "service carbon-cache start",
-    require => File["/etc/init/carbon-cache.conf"],
+    command   => "service carbon-cache restart",
+    require   => File["/etc/init/carbon-cache.conf"],
+    logoutput => on_failure,
   }
 }
 
@@ -225,8 +229,9 @@ class statsd {
   }
 
   exec { "start-etsy-statsd":
-    command => "service etsy-statsd start",
-    require => File["/etc/init/etsy-statsd.conf"],
+    command   => "service etsy-statsd restart",
+    require   => File["/etc/init/etsy-statsd.conf"],
+    logoutput => on_failure,
   }
 }
 
