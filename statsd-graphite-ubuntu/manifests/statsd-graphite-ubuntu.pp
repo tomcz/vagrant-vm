@@ -148,10 +148,9 @@ class graphite {
 
   file { "/opt/graphite/storage":
     ensure  => directory,
-    group   => "www-data",
-    owner   => "www-data",
+    mode    => 0777,
     recurse => true,
-    require => [Package["apache2"], Exec["setup-graphite-database"]],
+    require => Exec["setup-graphite-database"],
   }
 
   file { "/var/run/wsgi":
